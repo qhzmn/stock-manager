@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="/assets/css/home.css">{% endblock %}
+
+{% block content %}
+
+<div class="admin-actions">
+
+{% if user_type == 'admin' or user_type == 'manager'  %}
+    <a href="product/add">
+            <button>Add product</button>
+    </a>
+    
+{% endif %}
+    <a href="product/view">
+        <button>View product</button>
+    </a>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{
+    "name": "quent/code",
+    "autoload": {
+        "psr-4": {
+            "Src\\":"src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Quentin10",
+            "email": "quentin.hazemann@viacesi.fr"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.21"
+    }
+}

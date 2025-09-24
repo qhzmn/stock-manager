@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/searchbar.css">
+<link rel="stylesheet" href="/assets/css/sort.css">
+<link rel="stylesheet" href="/assets/css/table.css">
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/button.css">
+
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Manage products</h1>
+
+
+
+    
+<div class="stock-btn-container">
+    <a href="stock/entry">
+        <button class="add-stock-btn">+ Stock entry</button>
+    </a>
+    <a href="stock/exit">
+        <button class="remove-stock-btn">- Stock removal</button>
+    </a>
+    <a href="stock/alert">
+        <button class="other-stock-btn">Stock alert</button>
+    </a>
+    <a href="stock/movement">
+        <button class="other-stock-btn">Stock movement</button>
+    </a>
+</div>
+
+<hr>
+
+
+
+<div class="search-container">
+    <form id="searchForm" method="GET" action="/product">
+        <input type="text" name="search" id="searchInput" placeholder="Search a product..." value="{{ search ?? '' }}">
+        <button type="submit" id="searchBtn">✖️</button>
+        <input type="hidden" name="sort" value="{{ sort ?? 'name_asc' }}">
+        <input type="hidden" name="action" id="actionInput" value="reset">
+    </form>
+</div>
+
+<hr>
+
+<form method="get" action="/stock">
+<input type="hidden" name="search" value="{{ search ?? '' }}">
+    <div class="dropdown">
+        <button type="button" class="dropbtn" onclick="toggleDropdown()">Sort ▾</button>
+        <ul class="dropdown-content" id="dropdownMenu">
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="sku_asc"
+                           {% if sort == 'sku_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    SKU 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="sku_desc"
+                           {% if sort == 'sku_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    SKU 9→1
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="name_asc"
+                           {% if sort == 'name_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Name A→Z
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="name_desc"
+                           {% if sort == 'name_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Name Z→A
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="quantity_asc"
+                           {% if sort == 'quantity_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Quantity 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="quantity_desc"
+                           {% if sort == 'quantity_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Quantity 9→1
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="purchase_asc"
+                           {% if sort == 'purchase_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Purchase price 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="purchase_desc"
+                           {% if sort == 'purchase_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Purchase price 9→1
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="selling_asc"
+                           {% if sort == 'selling_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Selling price 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="selling_desc"
+                           {% if sort == 'selling_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Selling price 9→1
+                </label>
+            </li>
+            
+            
+        </ul>
+    </div>
+</form>
+<h2>RESULT</h2>
+<div class="section-container">
+{% if movements is empty %}
+    <span class="no-action">No products</span>
+{% else %}
+
+
+
+   
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Purchase price (€)</th>
+            <th>Selling price (€)</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        {% for movement in movements %}
+        <tr>
+            <td>{{ movement.sku|e }}</td>
+            <td>{{ movement.name|e }}</td>
+            <td>{{ movement.quantity|number_format(2, ',', ' ') }}</td>
+             <td>{{ movement.purchase_price|number_format(2, ',', ' ') }}</td>
+            <td>{{ movement.selling_price|number_format(2, ',', ' ') }}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+    
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/sort.js"></script>
+        <script src="/assets/js/search.js"></script>
+
+{% endblock %}

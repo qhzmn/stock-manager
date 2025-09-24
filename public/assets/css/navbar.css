@@ -1,0 +1,108 @@
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo à gauche, nav à droite */
+    background-color: #1a1a1a;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav .logo a img {
+    height: 50px;
+    display: block;
+}
+
+/* Nav links en desktop : flex horizontal, centrés entre eux */
+nav .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 70px;
+    margin-left: auto;  /* pousse la nav-links à droite */
+}
+
+nav .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav .nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav .nav-links li a.pageActive {
+    background-color: white;
+    color: #f38e3b;
+    font-weight: 700;
+    box-shadow: 0 0 5px #f38e3b;
+}
+
+/* Boutons burger cachés par défaut */
+#openBtn, #closeBtn {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    /* Burger visible en mobile */
+    #openBtn {
+        display: block;
+    }
+
+    /* Nav links en mobile : menu latéral caché à droite */
+    nav .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 60px;
+        padding-left: 20px;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+        color: #333;
+        gap: 0; /* enlever l’espace horizontal */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Quand menu actif */
+    nav .nav-links.active {
+        transform: translateX(0);
+    }
+
+    nav .nav-links li {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    nav .nav-links li a {
+        color: #333;
+        font-weight: 600;
+    }
+
+    /* Bouton fermer menu visible en mobile */
+    #closeBtn {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        color: #333;
+        font-size: 28px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}

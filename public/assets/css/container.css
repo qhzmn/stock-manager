@@ -1,0 +1,62 @@
+.home-image-container {
+    width: 100%;
+    min-height: 100%;               /* au moins la hauteur de l’écran */
+    background-image: url("../image/image1.jpg");
+    background-size: cover;          /* l’image couvre tout */
+    background-position: center;     /* centrée */
+    background-repeat: no-repeat;    /* pas de répétition */
+
+    display: flex;                   /* pour centrer le contenu */
+    justify-content: center;         /* horizontal */
+    align-items: center;             /* vertical */
+    flex-direction: column;          /* empile les boutons */
+}
+
+.home-boutton-container{
+    text-align: center;
+  margin: 40px auto;
+  padding: 50px;
+  max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.8); /* blanc avec 80% d’opacité */  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;            /* active flexbox */
+    flex-wrap: wrap;          /* passe à la ligne si trop large */
+    justify-content: center;  /* centre les boutons horizontalement */
+  gap: 20px;                /* espace entre chaque bouton */
+}
+
+.add-btn-container {
+    display: flex;
+    justify-content: flex-end; /* ou center / flex-end */
+    margin: 20px 10px;
+}
+.select-btn-container {
+    display: flex;
+    justify-content: flex-end; /* pousse le bouton à droite */
+    width: 100%;               /* prend toute la largeur disponible */
+    margin: 20px 10px;
+}
+
+.form-button-container {
+    display: flex;
+    gap: 10px; /* espace entre les boutons */
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.stock-btn-container {
+    display: flex;              /* active le flexbox */
+    justify-content: center;    /* centre les boutons horizontalement */
+    align-items: center;        /* aligne verticalement au centre */
+    gap: 15px;                  /* espace entre les boutons */
+    flex-wrap: wrap;            /* pour passer à la ligne si l’écran est trop petit */
+    margin: 20px 0;             /* un petit espace autour du conteneur */
+}

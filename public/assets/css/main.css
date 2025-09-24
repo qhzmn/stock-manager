@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+html, body {
+  height: 100%;              /* occupe toute la hauteur de l'écran */
+  margin: 0;
+  display: flex;
+  flex-direction: column;    /* empile header / main / footer */
+  font-family: 'Roboto', sans-serif;
+  background-color: #f6f6f6;
+}
+
+
+main {
+  flex: 1;                /* occupe tout l’espace restant */
+}
+main > :not(.home-image-container) {
+    margin: 20px;
+}
+
+
+h1 {
+    font-family: 'Roboto', sans-serif;  /* même police que le reste */
+    font-size: 2.5rem;                  /* taille du texte */
+    font-weight: 700;                   /* gras */
+    color: #333333;                     /* couleur principale */
+    text-align: center;                  /* centré */
+    margin: 40px 0 20px 0;              /* marge haut et bas */
+    letter-spacing: 1px;                /* espacement entre lettres */
+    text-transform: uppercase;          /* mettre en majuscule */
+    
+    /* petit effet décoratif */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
+}
+h2 {
+    font-family: 'Roboto', sans-serif;  /* même police que le reste */
+    font-size: 2rem;                    /* taille légèrement plus petite que h1 */
+    font-weight: 600;                   /* semi-gras */
+    color: #444444;                     /* couleur légèrement plus douce que h1 */
+    text-align: center;                 /* centré */
+    margin: 30px 0 20px 0;              /* marge haut et bas */
+    letter-spacing: 0.5px;              /* léger espacement entre lettres */
+    
+    /* petit effet décoratif */
+}

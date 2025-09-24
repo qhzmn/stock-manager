@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/button.css">
+
+{% endblock %}
+
+
+{% block content %}
+<div class="home-image-container">
+    <div class="home-boutton-container">
+        <a href="/product">
+            <button>Manage products</button>
+        </a>
+
+        <a href="/stock">
+            <button>Manage stocks</button>
+        </a>
+        <a href="/user">
+            <button>Manage users</button>
+        </a>
+        <a href="/statistic">
+            <button>Manage statistics</button>
+        </a>
+    </div>
+</div>
+
+
+{% endblock %}

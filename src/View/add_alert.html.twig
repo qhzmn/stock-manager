@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Trouve ton stage{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/form.css">
+<link rel="stylesheet" href="/assets/css/button.css">
+
+
+
+{% endblock %}
+{% block content %}
+<div>
+    <h2>Ajouter une alerte</h2>
+
+    <form id="alertForm" action="/stock/alert/add" method="POST" class="form-container">
+        <div class="form-group">
+            <label for="name">Nom de l'alerte :*</label>
+            <input type="text" id="name" name="name" required>
+            <div class="errorInput" id="nameError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="sku">SKU du produit :*</label>
+            <div class="selectproduct-btn-container">
+                <button type="button" class=selectproduct-btn" onclick="selectProducts('addAlert')">
+                    ➕ Sélectionner des produits
+                </button>
+            </div>
+            
+            <div class="display-zone">
+                {% for product in products %}
+                    <div>{{ product.name }} ({{ product.sku }})</div>
+                {% endfor %}
+            </div>
+
+            <!-- Champs cachés qui seront envoyés en POST -->
+            {% for product in products %}
+                <input type="hidden" name="id_products[]" value="{{ product.id_product }}">
+            {% endfor %}
+
+            <div class="errorInput" id="skuError"></div> 
+        </div>
+
+        <div class="form-group">
+            <label for="level">Niveau de stock :*</label>
+            <input type="number" id="level" name="level"required>
+            <div class="errorInput" id="levelError"></div>
+        </div>
+        
+
+        <div class="form-group">
+            <button type="submit" class="form-button">Ajouter</button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Avant de rediriger vers la page de sélection
+
+
+</script>
+
+    
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/select_product.js"></script>
+{% endblock %}

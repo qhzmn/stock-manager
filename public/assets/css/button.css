@@ -1,0 +1,138 @@
+
+
+/* Style des boutons */
+.home-boutton-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color, border-radius 0.3s ease;
+    min-width: 160px;
+}
+.home-boutton-container button:hover {
+    border-radius: 20px;
+    background-color: #0056b3;
+}
+
+.add-btn {
+    background-color: #4CAF50; /* vert agréable */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* espace entre l’icône et le texte */
+}
+/* Hover / effet au survol */
+.add-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.form-button-container button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.form-edit-btn {
+    background-color: #4096e6; /* vert */
+    color: white;
+}
+.form-edit-btn:hover {
+    background-color: #3374b1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* Bouton Delete */
+.form-delete-btn {
+    background-color: #f44336; /* rouge */
+    color: white;
+}
+
+.form-delete-btn:hover {
+    background-color: #e53935;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+
+.form-button {
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color, border-radius 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #0056b3;
+    border-radius: 20px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Style commun pour tous les boutons */
+.stock-btn-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Boutons spécifiques */
+.add-stock-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.remove-stock-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+.other-stock-btn {
+    background-color: #3575dc;
+    color: #fff;
+}
+
+/* Effet au survol */
+.stock-btn-container button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}

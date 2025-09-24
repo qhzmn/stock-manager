@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<!--
+<link rel="stylesheet" href="/assets/css/searchbar.css">
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/table.css">
+<link rel="stylesheet" href="/assets/css/sort.css">
+<link rel="stylesheet" href="/assets/css/button.css">
+-->
+<link rel="stylesheet" href="/assets/css/sort.css">
+<link rel="stylesheet" href="/assets/css/searchbar.css">
+<link rel="stylesheet" href="/assets/css/table.css">
+
+
+
+{% endblock %}
+
+{% block content %}
+<h1>History</h1>
+
+
+
+
+<hr>
+
+<div class="search-container">
+    <form id="searchForm" method="GET" action="/stock/movement">
+        <input type="text" name="search" id="searchInput" placeholder="Search a product..." value="{{ search ?? '' }}">
+        <button type="submit" id="searchBtn">✖️</button>
+        <input type="hidden" name="sort" value="{{ sort ?? 'name_asc' }}">
+        <input type="hidden" name="action" id="actionInput" value="reset">
+    </form>
+</div>
+
+
+<hr>
+
+<form method="GET" action="/stock/movement">
+<input type="hidden" name="search" value="{{ search ?? '' }}">
+    <div class="dropdown">
+        <button type="button" class="dropbtn" onclick="toggleDropdown()">Sort ▾</button>
+        <ul class="dropdown-content" id="dropdownMenu">
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="sku_asc"
+                           {% if sort == 'sku_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    SKU 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="sku_desc"
+                           {% if sort == 'sku_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    SKU 9→1
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="username_asc"
+                           {% if sort == 'username_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    User name A→Z
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="username_desc"
+                           {% if sort == 'username_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    User name Z→A
+                </label>
+            </li>     
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="type_asc"
+                           {% if sort == 'type_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Type A→Z
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="type_desc"
+                           {% if sort == 'type_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Type Z→A
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="date_asc"
+                           {% if sort == 'date_asc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Date 1→9
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="sort" value="date_desc"
+                           {% if sort == 'date_desc' %}checked{% endif %}
+                           onchange="this.form.submit()">
+                    Date 9→1
+                </label>
+            </li>
+        </ul>
+    </div>
+</form>
+
+<h2>RESULTAT</h2>
+<div class="section-container">
+{% if movements is empty %}
+        <span class="no-action">No movements</span>
+
+{% else %}
+   
+
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+
+            <th>SKU</th>
+            <th>User name</th>
+            <th>Type</th>
+            <th>Purchase price (€)</th>
+            <th>Selling price (€)</th>
+            <th>Quantity</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movement in movements %}
+        <tr data-id="{{ product.id_product }}" class="clickable-row">
+            <td>{{ movement.sku|e }}</td>
+            <td>{{ movement.last_name|e }} {{ movement.first_name|e }}</td>
+            <td>{{ movement.type|e }}</td>
+            <td>{{ movement.purchase_price|number_format(2, ',', ' ') }}</td>
+            <td>{{ movement.selling_price|number_format(2, ',', ' ') }}</td>
+            <td>{{ movement.quantity|number_format(0, ',', ' ') }}</td>
+            <td>{{ movement.comment|e }}</td>
+            <td>{{ movement.date|e }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+   
+    {% endif %}
+    
+</div>
+<!--
+<div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chartModalLabel">Statistiques du produit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="myChart" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/sort.js"></script>
+    <script src="/assets/js/search.js"></script>
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/modal.js"></script>-->
+
+
+
+{% endblock %}

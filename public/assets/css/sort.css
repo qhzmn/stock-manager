@@ -1,0 +1,45 @@
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 220px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 1;
+    margin-top: 6px;
+    padding: 8px 0;
+}
+
+.dropdown-content li {
+    list-style: none;
+    padding: 6px 16px;
+}
+
+.dropdown-content li label {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Affichage quand "show" est ajouté */
+.show {
+    display: block;
+}

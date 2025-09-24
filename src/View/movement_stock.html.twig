@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/button.css">
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/form.css">
+<link rel="stylesheet" href="/assets/css/table.css">
+
+
+{% endblock %}
+
+{% block content %}
+
+
+<div>
+{% if mode=='exit' %}
+<h1>Stock removal view</h1>
+{% else %}
+<h1>Stock receipts view</h1>
+{% endif %}
+
+   <form method="POST" action="/stock/{{ mode }}/add" class="form-container">
+    <div class="add-btn-container">
+        <button type="button" class="add-btn" onclick="selectProducts('{{ mode }}stock')">
+            + Select products
+        </button>
+    </div>
+
+
+
+    {% if products is empty %}
+        <span class="no-action">No product</span>
+    {% else %}
+        
+        
+
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>SKU</th>
+                    <th>Name</th>
+                    {% if mode=='exit' %}
+                    <th>Quantity removed</th>
+                    {% endif %}{% if mode=='entry' %}
+                    <th>Quantity added</th>
+                    {% endif %}
+                    <th>Total stock</th>
+                </tr>
+            </thead>
+            <tbody data-mode="{{ mode }}">
+                {% for product in products %}
+                <tr data-id="{{ product.id_product }}">
+                    <td class="sku-column">
+                        {{ product.sku|e }}
+                        <input type="hidden" 
+                               name="products[{{ product.id_product }}][sku]" 
+                               value="{{ product.sku }}">
+                    </td>
+                    <td class="name-column">
+                        {{ product.name|e }}
+                        <input type="hidden" 
+                               name="products[{{ product.id_product }}][name]" 
+                               value="{{ product.name }}">
+                    </td>
+                    
+
+                    <td class="qty-column">
+                        <div class="form-group">
+                            <input type="number" 
+                                   name="products[{{ product.id_product }}][quantity]" 
+                                   value="0" 
+                                   min="0" 
+                                   {% if mode=='exit' %}
+                                   max="{{ product.quantity }}"
+                                   {% endif %}
+                                   class="qty-input">
+                        </div>
+                    </td>
+                    <td class="total-column">
+                        <span class="stock-total" data-base="{{ product.quantity }}">
+                            {{ product.quantity }}
+                        </span>
+                    </td>                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="errorInput" id="tableError"></div>
+        
+        <div class="form-group comment-group">
+            <label for="comment">Comment :</label><br>
+            <textarea name="comment" id="comment" rows="3" cols="50" placeholder="Add a comment for this stock entry"></textarea>
+            <div class="errorInput" id="commentError"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-button">Confirm</button>
+        </div>
+
+    {% endif %}
+</form>
+
+
+
+</div>
+
+   
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/select_product.js"></script>
+    <script src="/assets/js/quantities.js"></script>
+    <script src="/assets/js/stock_validation.js"></script>
+
+<script>
+
+</script>
+{% endblock %}
+
+
+

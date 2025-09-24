@@ -1,0 +1,85 @@
+/* Conteneur centré */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+/* Formulaire flex pour que le champ et les boutons restent alignés */
+.search-container form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+/* Champ de saisie large */
+.search-container input[type="text"] {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+/* Boutons */
+.search-container button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Bouton Rechercher */
+.search-container button[value="search"] {
+    background-color: #4285f4;
+    color: white;
+}
+
+/* Bouton Reset */
+.search-container button[value="reset"] {
+    background-color: #f1f3f4;
+    color: #333;
+}
+
+/* Effets hover */
+.search-container button[value="search"]:hover {
+    background-color: #3367d6;
+}
+
+.search-container button[value="reset"]:hover {
+    background-color: #e2e5e7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
