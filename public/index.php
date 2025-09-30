@@ -1,3 +1,5 @@
+
+
 <?php
 session_start();
 
@@ -8,6 +10,7 @@ use Src\Controller\ConnectionController;
 use Src\Controller\ProductController;
 use Src\Controller\UserController;
 use Src\Controller\StockController;
+use Src\Controller\StatisticController;
 
 
 $login = isset($_SESSION['id_user']);
@@ -23,6 +26,15 @@ switch ($uri) {
         $controller->home();
         break;
 
+    case '/profil':
+        $controller = new HomeController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->editProfil();
+        }else{
+            $controller->formEditProfil();
+        }
+        break;
     case '/login':
         $controller = new ConnectionController();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -32,11 +44,19 @@ switch ($uri) {
             $controller->loginForm();
         }
         break;
-    
+    case '/logout':
+        $controller = new ConnectionController();
+        $controller->logout();
+        break;
+
+
+
+
     case '/product':
         $controller = new ProductController();
         $controller->homeProduct();
         break;
+        
     case '/product/add':
         $controller = new ProductController();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -62,6 +82,12 @@ switch ($uri) {
             $controller->deleteProduct();
         }
         break;
+
+
+
+
+        
+        
     case '/stock':
         $controller = new StockController();
         $controller->homeStock();
@@ -78,82 +104,10 @@ switch ($uri) {
         $controller = new StockController();
         $controller->movementStock('exit');
         break;
-        
     case '/stock/exit/add':
         $controller = new StockController();
         $controller->addMovementStock('exit');
         break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    case '/logout':
-        //$controller = new ConnectionController();
-        //$controller->logout();
-        break;
-    case '/profil':
-        //$controller = new ConnectionController();
-        //$controller->profil();
-        break;
-    
-    
-    case '/product/select':
-        $controller = new ProductController();
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method==='POST'){
-            $controller->selectProduct();
-        }else{
-            $controller->formSelectProduct();
-        }
-        break;
-        
-    
-    
-    
-    case '/product/stats':
-        
-        $controller = new ProductController();
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method==='GET'){            
-            $controller->statProduct($_GET['id_product']);
-        }
-
-    
-    
-    
-        
-    
-
-
-
-    case '/stock/movement':
-        $controller = new StockController();
-        $controller->homeMovement();
-        break;
-
-         
     case '/stock/alert':
         $controller = new StockController();
         $controller->homeAlert();
@@ -174,9 +128,116 @@ switch ($uri) {
             $controller->deleteAlert();
         }
         break;
-    case '/users':
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    case '/product/select':
+        $controller = new ProductController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->selectProduct();
+        }else{
+            $controller->formSelectProduct();
+        }
+        break;
+        
+    
+    
+    
+    case '/statistic':
+        $controller = new StatisticController();
+        $controller->homeStatistic();
+        break;
+    case '/statistic/report':
+        $controller = new StatisticController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->reportProduct();
+        }else{
+            $controller->formReportProduct();
+        }
+        break;
+    case '/statistic/resume':
+        $controller = new StatisticController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->reportProduct();
+        }else{
+            $controller->formReportProduct();
+        }
+        break;
+    case '/statistic':
+        $controller = new StatisticController();
+        $controller->homeStatistic();
+        break;
+        
+
+    
+    
+    
+        
+    
+
+
+
+    case '/stock/movement':
+        $controller = new StockController();
+        $controller->homeMovement();
+        break;
+
+         
+    
+
+
+
+    case '/user':
         $controller = new UserController();
         $controller->homeUser();
+        break;
+    case '/user/add':
+        $controller = new UserController();
+        if ($_SERVER['REQUEST_METHOD']==='POST'){
+            $controller->addUser();
+        }else{
+            $controller->formAddUser();
+        }
+        break;
+    case '/user/edit':
+        $controller = new UserController();
+        if ($_SERVER['REQUEST_METHOD']==='POST' && count($_POST) != 1){
+            $controller->editUser();
+        }else{
+            $controller->formEditUser();
+        }    
+        break;
+    case '/user/delete':
+        $controller = new UserController();
+        $controller->deleteUser();
         break;
 
     default:

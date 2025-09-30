@@ -19,7 +19,7 @@ class AlertModel {
 
 
     public function deleteAlert($id_product) {
-        $stmt = $this->db->prepare("DELETE FROM alerts WHERE id_product = ?");
+        $stmt = $this->db->prepare("DELETE FROM alerts WHERE id_alert = ?");
         $stmt->execute([$id_product]);
         return $stmt->rowCount() > 0;
     }

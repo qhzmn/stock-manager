@@ -43,10 +43,15 @@ class MovementModel {
     }
 
     // Filtre par produit
-    if ($id_product !== null) {
-        $sql .= " AND m.id_product = :id_product";
-        $params[':id_product'] = $id_product;
+    if (!empty($id_products)) {
+        $placeholders = [];
+        foreach ($id_products as $index => $val) {
+            $placeholders[] = ":id_product{$index}";
+            $params[":id_product{$index}"] = $val;
+        }
+        $sql .= " AND m.id_product IN (" . implode(',', $placeholders) . ")";
     }
+
 
     // Filtre par date
     if ($start_date && $end_date) {
@@ -77,6 +82,7 @@ class MovementModel {
 
     $orderBy = $allowedSort[$sort] ?? 'm.date DESC';
     $sql .= " ORDER BY $orderBy";
+    
 
     $stmt = $this->db->prepare($sql);
     $stmt->execute($params);

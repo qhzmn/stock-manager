@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="/assets/css/container.css">
+    <link rel="stylesheet" href="/assets/css/searchbar.css">
+    <link rel="stylesheet" href="/assets/css/sort.css">
+    <link rel="stylesheet" href="/assets/css/button.css">
+    <link rel="stylesheet" href="/assets/css/table.css">
+{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+{% if button_add is defined %}
+    <div class="add-btn-container">
+        <a href={{ button_add[1] }}>
+            <button class="add-btn">{{ button_add[0] }}</button>
+        </a>
+    </div>
+{% endif %}
+
+{% if button_menu is defined %}
+    <div class="stock-btn-container">
+    {% for key, value in button_menu %}
+        <a href="{{ path }}/{{ key }}">
+            <button class="{{ key }}-stock-btn">{{ value }}</button>
+        </a>
+    {% endfor %}
+    </div>
+{% endif %}
+
+
+
+
+{% if search is defined %}
+<hr>
+<div class="search-container">
+    <form id="searchForm" method="GET" action="{{ path }}">
+        <input type="text" name="search" id="searchInput" placeholder="Search..." value="{{ search ?? '' }}">
+        <button type="submit" id="searchBtn">✖️</button>
+        <input type="hidden" name="sort" value="{{ sort ?? 'name_asc' }}">
+        <input type="hidden" name="action" id="actionInput" value="reset">
+    </form>
+</div>
+{% endif %}
+
+<hr>
+{% if sort is defined %}
+<form method="get" action="{{ path }}">
+    <input type="hidden" name="search">
+    <div class="dropdown">
+        <button type="button" class="dropbtn" onclick="toggleDropdown()">Sort ▾</button>
+        <ul class="dropdown-content" id="dropdownMenu">
+            {% for key, value in sortable_columns %}
+                <li>
+                    <label>
+                        <input type="radio" name="sort" value="{{ key }}"
+                               {% if sort == key %}checked{% endif %}
+                               onchange="this.form.submit()">
+                        {{ value }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</form>
+{% endif %}
+
+
+<h2>{{ subtitle }}</h2>
+
+<div class="section-container">
+{% if data is empty %}
+    <span class="no-action">No data</span>
+{% else %}
+
+<table>
+    <thead>
+        <tr>
+            {% for field, label in headers %}
+                {% if field == 'actions' %}
+                    <th>{{ label.label }}</th>
+                {% else %}
+                    <th>{{ label }}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+            <tr data-id="{{ row.id }}" class="clickable-row">
+                {% for field, label in headers %}
+                    <td>
+                        {# prix formatés #}
+                        {% if field in ['purchase_price', 'selling_price'] %}
+                            {{ attribute(row, field)|number_format(2, ',', ' ') }}
+
+                        {# actions dynamiques #}
+                        {% elseif field == 'actions' %}
+                            <div class="form-button-container">
+                                {% for btn in label.buttons %}
+                                    <form method="POST" action="{{ btn[0] }}">
+                                        <input type="hidden" name="{{ id }}" value="{{ attribute(row, id) }}">
+                                        <button type="submit"
+                                                class="form-{{ btn[2]|lower }}-btn"
+                                                onclick="event.stopPropagation(); return confirm('{{ btn[1] }}');">
+                                            {{ btn[2] }}
+                                        </button>
+                                    </form>
+                                {% endfor %}
+                            </div>
+
+                        {# champs simples #}
+                        {% else %}
+                            {{ attribute(row, field)|e }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+</div>
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="/assets/js/sort.js"></script>
+    <script src="/assets/js/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/modal.js"></script>
+
+
+
+{% endblock %}

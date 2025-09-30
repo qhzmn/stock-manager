@@ -13,7 +13,8 @@
 
 /* Input et textarea */
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     box-sizing: border-box; /* inclut padding et border */
     padding: 10px 12px;

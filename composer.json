@@ -12,6 +12,8 @@
         }
     ],
     "require": {
-        "twig/twig": "^3.21"
+        "twig/twig": "^3.21",
+        "tecnickcom/tcpdf": "^6.10",
+        "dompdf/dompdf": "^3.1"
     }
 }

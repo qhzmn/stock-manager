@@ -8,6 +8,12 @@ class ProductModel {
     public function __construct($db) {
         $this->db = $db;
     }
+    public function checkSku($sku) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM products WHERE sku = ?");
+        $stmt->execute([$sku]);
+        $count = $stmt->fetchColumn(); // récupère directement la valeur du COUNT
+        return $count == 0;
+    }
 
     public function getProducts(array $ids = [], string $search = '', string $sort = 'sku_asc')
     {

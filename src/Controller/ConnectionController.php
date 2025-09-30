@@ -8,19 +8,7 @@ use Src\Model\UserHistoryModel;
 use Src\Model\UserModel;
 
 
-function getUserIp() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-        // IP depuis un client partagé
-        return $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        // IP derrière un proxy ou load balancer
-        $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-        return trim($ips[0]); // première IP de la liste
-    } else {
-        // IP directe
-        return $_SERVER['REMOTE_ADDR'];
-    }
-}
+
 
 
 class ConnectionController{
@@ -54,12 +42,11 @@ class ConnectionController{
             exit;
         }
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Inconnu';
-        $ip_address = getUserIp();
         $user = $userModel->login($email, $password);
+        $id_user= $user['id_user'] ?? null;
         if($user){
             $state = 1;
             $_SESSION['login_succes'] = "Successful connection";
-
             session_regenerate_id(true);
             $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['email'] = $user['email'];
@@ -69,7 +56,7 @@ class ConnectionController{
             $_SESSION['login_error'] = "Connection failed";
         }
         $userHistoryModel = new UserHistoryModel($pdo);
-        $userHistoryModel->userHistory(NULL, $email, $ip_address, $userAgent, "login", $state);
+        $userHistoryModel->addUserHistory($id_user, $email, "login", $state);
         header('Location: /');
         exit;
     }
@@ -81,11 +68,21 @@ class ConnectionController{
 
     
     
-    public function profil(){
-        echo $this->twig->render('profil.html.twig');
-    }
+
     public function logout(){
         $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
         session_destroy();
         header("Location: /");
         exit;

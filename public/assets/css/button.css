@@ -117,16 +117,16 @@
 }
 
 /* Boutons spécifiques */
-.add-stock-btn {
+.entry-stock-btn {
     background-color: #28a745;
     color: #fff;
 }
 
-.remove-stock-btn {
+.exit-stock-btn {
     background-color: #dc3545;
     color: #fff;
 }
-.other-stock-btn {
+.alert-stock-btn, .movement-stock-btn {
     background-color: #3575dc;
     color: #fff;
 }

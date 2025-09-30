@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="/assets/css/container.css">
+<link rel="stylesheet" href="/assets/css/form.css">
+<link rel="stylesheet" href="/assets/css/button.css">
+
+{% endblock %}
+{% block content %}
+
+<div>
+    <h2>{{ subtitle }}</h2>
+    <form action="{{ action }}" method="POST" class="form-container">
+
+    {% for field in fields %}
+        {% if field.type == 'hidden' %}
+            <input type="hidden" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value|e }}">
+            
+        {% elseif field.type == 'selectproduct' %}
+            <div class="form-group">
+                <label for="{{ field.name }}">{{ field.label }}</label>
+                <div class="selectproduct-btn-container">
+                    <button type="button" class="selectproduct-btn" onclick="selectProducts('{{ mode }}')">
+                        ➕ Sélectionner des produits
+                    </button>
+                </div>
+                <div class="display-zone">
+                    {% for product in products %}
+                        <div>{{ product.name }} ({{ product.sku }})</div>
+                    {% endfor %}
+                </div>
+
+                {% for product in products %}
+                    <input type="hidden" name="id_products[]" value="{{ product.id_product }}">
+                {% endfor %}
+
+                <div class="errorInput" id="{{ field.name }}Error"></div> 
+            </div>
+
+
+    {% else %}
+        <div class="form-group">
+        <label for="{{ field.name }}">{{ field.label }}</label>
+        {% if field.type == 'textarea' %}
+            <textarea id="{{ field.name }}"
+                name="{{ field.name }}"
+                {% if field.required %}required{% endif %}>{{ field.value|e }}</textarea>
+
+        {% elseif field.type == 'select' %}
+            <select id="{{ field.name }}"
+                name="{{ field.name }}"
+                {% if field.required %}required{% endif %}>
+                {% for option_value, option_label in field.options %}
+                    <option value="{{ option_value }}"
+                        {% if option_value == field.value %}selected{% endif %}>
+                        {{ option_label }}
+                    </option>
+                {% endfor %}
+            </select>
+        
+        {% else %}            
+            <input type="{{ field.type }}"
+                id="{{ field.name }}"
+                name="{{ field.name }}"
+                value="{{ field.value|e }}"
+                {% if field.step is defined %}step="{{ field.step }}"{% endif %}
+                {% if field.required %}required{% endif %}>
+        {% endif %}
+
+        <div class="errorInput" id="{{ field.name }}Error"></div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    <div class="form-group">
+        <button type="submit" class="form-button">{{ submit_label }}</button>
+    </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <!--<script src="/assets/js/add_product_validation.js"></script>-->
+    <script src="/assets/js/form_validation.js"></script>
+    <script src="/assets/js/select_product.js"></script>
+
+{% endblock %}

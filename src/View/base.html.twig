@@ -31,6 +31,8 @@
         <button id="closeBtn" class="close" aria-label="Close menu">&times;</button>
         <li><a href="/" class="{% if currentPath starts with '' %}pageActive{% endif %}">Home</a></li>
         <li><a href="/profil" class="{% if currentPath starts with '' %}pageActive{% endif %}">My page</a></li>  
+        <li><a href="/logout" class="{% if currentPath starts with '' %}pageActive{% endif %}" onclick="return confirm('Are you sure you want to log out ?');">Disconnection</a></li>  
+
     </ul>
   </nav>
 
