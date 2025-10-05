@@ -117,15 +117,69 @@ class StatisticController
         $movementModel = new MovementModel($pdo);
         $movements = $movementModel->getMovements($id_products, [], $date1, $date2, '', '');
         
-        if (!$movements){
+        if (empty($movements)){
             $_SESSION['statistic_error'] = "Error";
             header("Location: /statistic/report");
             exit;
         }
-        var_dump($movements);
+        $filename = "export_" . date("Y-m-d_H-i-s") . ".csv";
+        // Headers pour forcer le téléchargement
+        header("Content-Type: text/csv; charset=utf-8");
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        $fp = fopen("php://output", "w");
+        fputcsv($fp, array_keys($movements[0]), ";", '"', "\\");
+        // Parcourir les données et écrire dans le CSV
+        foreach ($movements as $row) {
+            fputcsv($fp, $row, ";", '"', "\\");
+        }
+        fclose($fp);
         exit;
-    
+
     }
+    public function recapProduct($key){
+    require_once __DIR__ . '/../Model/MovementModel.php';
+    require_once __DIR__ . '/../Model/ProductModel.php';
+    require_once __DIR__ . '/../../config/database.php';
+
+    $movementModel = new MovementModel($pdo);
+    $productModel = new ProductModel($pdo);
+
+    // Produit le plus vendu
+    $more_selling = $movementModel->getRecapProduct('DESC');
+    $top_selling = $more_selling[0] ?? ['id_product' => '-', 'level' => 0];
+
+    // Produit le moins vendu
+    $less_selling = $movementModel->getRecapProduct('ASC');
+    $least_selling = $less_selling[0] ?? ['id_product' => '-', 'level' => 0];
+
+    // Stock faible
+    $low_stock_data = $productModel->getRecapProduct(1);
+    $low_stock = $low_stock_data[0] ?? ['name' => '-', 'level' => 0];
+
+    // Rupture de stock
+    $out_stock_data = $productModel->getRecapProduct(0);
+    $out_stock = $out_stock_data[0] ?? ['name' => '-', 'level' => 0];
+
+    // Retourne les données sous forme de JSON pour le frontend
+    header('Content-Type: application/json');
+    echo json_encode([
+        'title' => 'Statistiques produit',
+        'top_selling' => $top_selling,
+        'least_selling' => $least_selling,
+        'low_stock' => $low_stock,
+        'out_of_stock' => $out_stock
+    ]);
+}
+
+
+
+
+
+
+
+
+
+    
 
     
     

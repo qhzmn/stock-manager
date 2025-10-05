@@ -1,3 +1,5 @@
+// manage the validation of differents forms
+
 document.addEventListener("DOMContentLoaded", function () {
     const forms = document.querySelectorAll("form");
 
@@ -5,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         form.addEventListener("submit", function (e) {
             let errors = false;
 
-            // Vérifie chaque input/textarea/select
             const inputs = form.querySelectorAll("input, textarea, select");
             inputs.forEach(input => {
 
@@ -103,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const errorDiv = document.getElementById("new_password2Error");
 
             if (currentPass && newPass1 && newPass2) {
-                // Vérifie si au moins un champ est rempli
                 if (currentPass.value || newPass1.value || newPass2.value) {
                     if (!currentPass.value || !newPass1.value || !newPass2.value) {
                         errorDiv.textContent = "All password fields must be completed.";

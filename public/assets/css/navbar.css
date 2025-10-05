@@ -34,10 +34,8 @@ nav .nav-links li a:hover {
 }
 
 nav .nav-links li a.pageActive {
-    background-color: white;
-    color: #f38e3b;
-    font-weight: 700;
-    box-shadow: 0 0 5px #f38e3b;
+    background-color: rgba(255, 255, 255, 0.2);
+    
 }
 
 /* Boutons burger cachés par défaut */

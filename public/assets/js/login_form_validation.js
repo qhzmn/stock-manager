@@ -1,3 +1,5 @@
+// manage the validation of login form
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const form = document.getElementById("loginForm");
@@ -10,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (e) {
         let valid = true;
 
-        // Réinitialise les messages d'erreur
         emailError.textContent = "";
         passwordError.textContent = "";
 
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (!valid) {
-            e.preventDefault(); // Empêche l'envoi du formulaire
+            e.preventDefault();
         }
     });
 });

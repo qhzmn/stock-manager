@@ -25,7 +25,6 @@ switch ($uri) {
         $controller = new HomeController();
         $controller->home();
         break;
-
     case '/profil':
         $controller = new HomeController();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -35,6 +34,17 @@ switch ($uri) {
             $controller->formEditProfil();
         }
         break;
+    case '/notices':
+        $controller = new HomeController();
+        $controller->notices();
+        break;
+
+    case '/policies':
+        $controller = new HomeController();
+        $controller->policies();
+        break;
+
+
     case '/login':
         $controller = new ConnectionController();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -50,13 +60,10 @@ switch ($uri) {
         break;
 
 
-
-
     case '/product':
         $controller = new ProductController();
         $controller->homeProduct();
-        break;
-        
+        break;  
     case '/product/add':
         $controller = new ProductController();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -82,12 +89,24 @@ switch ($uri) {
             $controller->deleteProduct();
         }
         break;
-
-
-
-
+    case '/product/select':
+        $controller = new ProductController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->selectProduct();
+        }else{
+            $controller->formSelectProduct();
+        }
+        break;
+    case '/product/stats':
+        $controller = new ProductController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='GET'){            
+            $controller->statProduct($_GET['id_product']);
+        }
+        break;
         
-        
+
     case '/stock':
         $controller = new StockController();
         $controller->homeStock();
@@ -128,91 +147,10 @@ switch ($uri) {
             $controller->deleteAlert();
         }
         break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
-    case '/product/select':
-        $controller = new ProductController();
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method==='POST'){
-            $controller->selectProduct();
-        }else{
-            $controller->formSelectProduct();
-        }
-        break;
-        
-    
-    
-    
-    case '/statistic':
-        $controller = new StatisticController();
-        $controller->homeStatistic();
-        break;
-    case '/statistic/report':
-        $controller = new StatisticController();
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method==='POST'){
-            $controller->reportProduct();
-        }else{
-            $controller->formReportProduct();
-        }
-        break;
-    case '/statistic/resume':
-        $controller = new StatisticController();
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method==='POST'){
-            $controller->reportProduct();
-        }else{
-            $controller->formReportProduct();
-        }
-        break;
-    case '/statistic':
-        $controller = new StatisticController();
-        $controller->homeStatistic();
-        break;
-        
-
-    
-    
-    
-        
-    
-
-
-
     case '/stock/movement':
         $controller = new StockController();
         $controller->homeMovement();
         break;
-
-         
-    
-
 
 
     case '/user':
@@ -238,6 +176,31 @@ switch ($uri) {
     case '/user/delete':
         $controller = new UserController();
         $controller->deleteUser();
+        break;
+
+    
+    case '/statistic':
+        $controller = new StatisticController();
+        $controller->homeStatistic();
+        break;
+    case '/statistic/report':
+        $controller = new StatisticController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='POST'){
+            $controller->reportProduct();
+        }else{
+            $controller->formReportProduct();
+        }
+        break;
+    case '/statistic/resume':
+        $controller = new StatisticController();
+        break;
+    case '/statistic/resume/recap':
+        $controller = new StatisticController();
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method==='GET'){            
+            $controller->recapProduct($_GET['key']);
+        }
         break;
 
     default:

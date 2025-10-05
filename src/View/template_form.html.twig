@@ -41,7 +41,7 @@
 
     {% else %}
         <div class="form-group">
-        <label for="{{ field.name }}">{{ field.label }}</label>
+        <label for="{{ field.name }}">{{ field.label }}{% if field.required %}<span style="color:red">*</span>{% endif %}</label>
         {% if field.type == 'textarea' %}
             <textarea id="{{ field.name }}"
                 name="{{ field.name }}"

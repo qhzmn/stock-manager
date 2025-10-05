@@ -1,7 +1,8 @@
+// manage the quantities for stock entry and exit
+
 document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.querySelector("tbody[data-mode]");
-    const mode = tbody.dataset.mode; // récupère "entree" ou "sortie"
-    // Cibler tous les inputs quantité
+    const mode = tbody.dataset.mode;
     document.querySelectorAll(".qty-input").forEach(input => {
         input.addEventListener("input", () => {
             const row = input.closest("tr");

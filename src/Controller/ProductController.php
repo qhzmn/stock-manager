@@ -24,6 +24,7 @@ class ProductController
         require_once __DIR__ . '/../Model/ProductModel.php';
         require_once __DIR__ . '/../../config/database.php';
         $productModel = new ProductModel($pdo);
+        $id_product = isset($_GET['productId']) ? (int)$_GET['productId'] : null;
         $userType = $_SESSION['type'];
         $action = $_GET['action'] ?? '';
         $search = $_GET['search'] ?? '';
@@ -41,10 +42,12 @@ class ProductController
         $sortable_columns = $sortable_columns = ['sku_asc' => 'SKU 1→9', 'sku_desc' => 'SKU 9→1', 'name_asc' => 'Name A→Z',
             'name_desc' => 'Name Z→A', 'purchase_asc' => 'Purchase price 1→9', 'purchase_desc'=> 'Purchase price 9→1', 'selling_asc' => 'Selling price 1→9',
             'selling_desc' => 'Selling price 9→1', 'category_asc' => 'Category A→Z', 'category_desc'=> 'Category Z→A'];
-        echo $this->twig->render('template_home.html.twig',[
+
+            echo $this->twig->render('template_home.html.twig',[
             'title' => 'Manage products',
             'button_add' => ['+ Product', 'product/add'],
             //'button_menu' => ['entry' => '+ Stock entry'],
+            'IdTable' => 'productsTable',
             'search' => $search,
             'path' => 'product', 
             'sort' => $sort,
@@ -116,9 +119,9 @@ class ProductController
         if ($id_product) {
             $productModel = new MovementModel($pdo);
             $productModel->addMovement($id_product, $sku, $_SESSION['id_user'], $quantity, $purchase, $selling, 'add', '');
-            $_SESSION['product_succes'] = "Product addition succes";
+            $_SESSION['product_succes'] = "Product added successfully";
         } else {
-            $_SESSION['product_error'] = "Product addition error";
+            $_SESSION['product_error'] = "Product addition error ";
         }
         header('Location: /product');
         exit;    
@@ -131,7 +134,7 @@ class ProductController
         $productModel = new ProductModel($pdo);
         $product = $productModel->getProducts([$_POST['id_product']], '', '');
         if (!$product) {
-            $_SESSION['product_error'] = "Erreur modifier produit";
+            $_SESSION['product_error'] = "Product modification error";
             header('Location: /product');
             exit; 
         }
@@ -193,9 +196,9 @@ class ProductController
         if ($success) {
             $productModel = new MovementModel($pdo);
             $productModel->addMovement($id_product, $sku, $_SESSION['id_user'], $quantity, $purchase, $selling, 'edit', '');
-            $_SESSION['product_succes'] = "Product edition succes";
+            $_SESSION['product_succes'] = "Product successfully modified";
         } else {
-            $_SESSION['product_error'] = "Product edition error";
+            $_SESSION['product_error'] = "Product modification error";
             header('Location: /product/edit');
             exit;   
         }
@@ -214,12 +217,56 @@ class ProductController
         if ($success) {
             $productModel = new MovementModel($pdo);
             $productModel->addMovement($id_product, $product[0]['sku'], $_SESSION['id_user'], null, null, null, 'delete', '');
-            $_SESSION['product_succes'] = "Succes produit supprimer";
+            $_SESSION['product_succes'] = "Product successfully deleted";
         } else {
-            $_SESSION['product_error'] = "Erreur supprimer produit";
+            $_SESSION['product_error'] = "Product deletion error ";
         }
         header('Location: /product');
         exit;
+    }
+
+    public function statProduct($id){
+        require_once __DIR__ . '/../Model/MovementModel.php';
+        require_once __DIR__ . '/../../config/database.php';
+        
+        $productModel = new MovementModel($pdo);
+        $stats  = $productModel->getStatProduct($id);
+        header('Content-Type: application/json; charset=utf-8');
+        if ($stats) {
+            $labels = [];
+            $purchasePrices = [];
+            $sellingPrices = [];
+            $quantities = [];
+
+            foreach ($stats as $row) {
+                $labels[] = date('Y-m-d', strtotime($row['date']));
+                $purchasePrices[] = (float)$row['purchase_price'];
+                $sellingPrices[] = (float)$row['selling_price'];
+                $quantities[] = (int)$row['quantity'];
+            }
+            
+            
+            echo json_encode([
+                "labels" => $labels,
+                "datasets" => [
+                    ["label" => "Purchase Price", "data" => $purchasePrices],
+                    ["label" => "Selling Price", "data" => $sellingPrices],
+                    ["label" => "Quantity", "data" => $quantities],
+                ]
+            ], JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
+            exit;
+        } else {
+            echo json_encode([
+                "labels" => [],
+                "datasets" => []
+            ]);
+            exit;
+        }
+
+
+    
+        
+
     }
 
 

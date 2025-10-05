@@ -44,8 +44,8 @@ class StockController
             'selling_price'  => 'Selling price (€)'
         ];
         $sortable_columns = $sortable_columns = ['sku_asc' => 'SKU 1→9', 'sku_desc' => 'SKU 9→1', 'name_asc' => 'Name A→Z',
-        'name_desc' => 'Name Z→A', 'purchase_asc' => 'Purchase price 1→9', 'purchase_desc'=> 'Purchase price 9→1', 'selling_asc' => 'Selling price 1→9',
-        'selling_desc' => 'Selling price 9→1', 'quantity_asc' => 'Quantity 1→9', 'quantity_desc'=> 'Quantity 9→1'];
+        'name_desc' => 'Name Z→A', 'quantity_asc' => 'Quantity 1→9', 'quantity_desc'=> 'Quantity 9→1', 'purchase_asc' => 'Purchase price 1→9', 'purchase_desc'=> 'Purchase price 9→1', 'selling_asc' => 'Selling price 1→9',
+        'selling_desc' => 'Selling price 9→1'];
         echo $this->twig->render('template_home.html.twig',[
             'title' => 'Manage stocks',
             //'button_add' => ['+ Product', 'product/add'],

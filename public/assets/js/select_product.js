@@ -1,3 +1,5 @@
+// manage the callback function for the selected products
+
 function selectProducts(callback = "addAlert") {
     console.log('fonction select products');
     //sessionStorage.setItem('alert_name', document.getElementById('name').value);
@@ -5,7 +7,6 @@ function selectProducts(callback = "addAlert") {
     window.location.href = "/product/select?callback=" + encodeURIComponent(callback);
 }
 
-// Au retour sur la page du formulaire
 document.addEventListener('DOMContentLoaded', () => {
     const savedName = sessionStorage.getItem('alert_name');
     const savedLevel = sessionStorage.getItem('alert_level');

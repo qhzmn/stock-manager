@@ -25,8 +25,11 @@ class HomeController
         unset($_SESSION['login_succes']);
         unset($_SESSION['profil_succes']);
         $userType = $_SESSION['type'];
-        echo $this->twig->render('home.html.twig', ['user_type' => $userType, 'succes' => $succes]);
+      
+        $currentPath = $_SERVER['REQUEST_URI'];
+        echo $this->twig->render('home.html.twig', ['currentPath' => $currentPath, 'user_type' => $userType, 'succes' => $succes]);
     }
+
     public function formEditProfil(){
         require_once __DIR__ . '/../Model/UserModel.php';
         require_once __DIR__ . '/../../config/database.php';
@@ -35,6 +38,7 @@ class HomeController
         $user = $userModel->getUser($id_user);
         $error = $_SESSION['profil_error'] ?? null;
         unset($_SESSION['profil_error']);
+        $currentPath = $_SERVER['REQUEST_URI'];
         $form_fields = [['name' => 'id_user', 'type' => 'hidden', 'value' => $user[0]['id_user'] ?? ''],
         ['name' => 'first_name', 'label' => 'First name :', 'type' => 'text', 'required' => true, 'value' => $user[0]['first_name'] ?? ''],
         ['name' => 'last_name', 'label' => 'Last name :', 'type' => 'text', 'required' => true, 'value' => $user[0]['last_name'] ?? ''],
@@ -42,7 +46,7 @@ class HomeController
         ['name' => 'current_password', 'label' => 'Current password :', 'type' => 'password', 'required' => false],
         ['name' => 'new_password1', 'label' => 'New password :', 'type' => 'password', 'required' => false],
         ['name' => 'new_password2', 'label' => 'Re-enter the new password :', 'type' => 'password', 'required' => false]];
-        echo $this->twig->render('template_form.html.twig', [
+        echo $this->twig->render('template_form.html.twig', ['currentPath' => $currentPath,
             'subtitle' => 'Edit profil',
             'action' => '/profil',
             'fields' => $form_fields,
@@ -104,6 +108,15 @@ class HomeController
         } 
         header('Location: /');
         exit;
+    }
+
+    public function policies() {
+        $currentPath = $_SERVER['REQUEST_URI'];
+        echo $this->twig->render('template_legal.html.twig', ['currentPath' => $currentPath, 'page_type' => 'privacy']);
+    }
+    public function notices() {
+        $currentPath = $_SERVER['REQUEST_URI'];
+        echo $this->twig->render('template_legal.html.twig', ['currentPath' => $currentPath, 'page_type' => 'legal']);
     }
 
     

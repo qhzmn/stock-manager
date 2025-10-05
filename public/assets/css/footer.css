@@ -29,12 +29,11 @@ footer {
 }
 
 .footer-links a:hover {
-  /*color: #007bff;*/
+  text-decoration: underline;
 }
 
 .footer-links .pageActive {
-  /*color: #007bff;
-  text-decoration: underline;*/
+  text-decoration: underline;
 }
 
 footer p {

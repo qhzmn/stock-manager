@@ -108,6 +108,21 @@ class ProductModel {
         return $stmt->rowCount() > 0;
     }
 
+
+
+    public function getRecapProduct($type){
+        if ($type == 0) {
+            // Produits en rupture de stock
+            $sql = "SELECT id_product, quantity AS level FROM products WHERE quantity = 0 ORDER BY quantity ASC LIMIT 1";
+        } else {
+            // Produits en stock
+            $sql = "SELECT id_product, quantity AS level FROM products WHERE quantity != 0 ORDER BY quantity ASC LIMIT 1";
+        }
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     
 }
 

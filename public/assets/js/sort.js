@@ -1,3 +1,5 @@
+// manage the sort button
+
 document.addEventListener("DOMContentLoaded", () => {
     const dropbtn = document.querySelector(".dropbtn");
     const dropdown = document.querySelector(".dropdown-content");

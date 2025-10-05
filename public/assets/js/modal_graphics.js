@@ -1,3 +1,4 @@
+// modal for product graphics 
 
 document.addEventListener("DOMContentLoaded", () => {
     let chartInstance = null; // pour détruire l'ancien graphique

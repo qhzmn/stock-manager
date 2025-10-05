@@ -14,7 +14,7 @@ class MovementModel {
         return $stmt->rowCount() > 0;
     }
 
-    public function getMovements($id_product = null, array $types = [], $start_date = null, $end_date = null, $search = '', $sort = 'date_desc')
+    public function getMovements($id_products = null, array $types = [], $start_date = null, $end_date = null, $search = '', $sort = 'date_desc')
 {
     $sql = "SELECT 
                 m.sku, 
@@ -90,12 +90,34 @@ class MovementModel {
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
 
-    
+
+    public function getStatProduct($id){
+            $sql = "SELECT date, purchase_price, selling_price, quantity FROM movements WHERE id_product = ? AND type='level' ORDER BY date ASC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            
+        
+    }
+
+    public function getRecapProduct($type){
+    // Vérifier que le type est bien 'ASC' ou 'DESC' pour éviter l'injection SQL
+    $type = strtoupper($type) === 'ASC' ? 'ASC' : 'DESC';
+
+    $sql = "SELECT id_product, SUM(quantity) AS level 
+            FROM movements 
+            WHERE type = 'exit' 
+            GROUP BY id_product 
+            ORDER BY level $type 
+            LIMIT 1";
+
+    $stmt = $this->db->query($sql); // pas besoin de prepare puisque pas de variable
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
 
 
 
-
- 
     
 
 }

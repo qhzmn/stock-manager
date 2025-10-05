@@ -1,16 +1,18 @@
+// manage the search barre
+ 
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const actionInput = document.getElementById('actionInput');
 
-const initialValue = searchInput.value; // valeur au chargement
+const initialValue = searchInput.value; 
 
 searchInput.addEventListener('input', () => {
 
     if (searchInput.value === '' || searchInput.value === initialValue) {
-        searchBtn.textContent = '✖️'; // affiche la croix si vide ou inchangé
+        searchBtn.textContent = '✖️'; 
         actionInput.value = 'reset';
     } else {
-        searchBtn.textContent = '🔍'; // affiche la loupe si modifié
+        searchBtn.textContent = '🔍';
         actionInput.value = 'search';
     }
 });
